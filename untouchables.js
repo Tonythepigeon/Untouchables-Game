@@ -1,22 +1,22 @@
-//var img = new Image();
-var canvas = document.getElementById('myCanvas');
-var ctx = canvas.getContext('2d');
+let canvas = document.getElementById('myCanvas');
+let ctx = canvas.getContext('2d');
 ctx.canvas.width  = window.innerWidth - 20;
 ctx.canvas.height = window.innerHeight - 20;
-var img = new Image();
-var img = new newAsset(img, 'mainShip.png', canvas.width / 2, canvas.height - 80, 120, 120);
-function newAsset(name, imageSrc, xPosition, yPosition, inWidth, inHeight){
-    name.src = 'images/' + imageSrc;
-    this.width = inWidth; 
-    this.height = inHeight;
-    this.xPos = xPosition - this.width / 2; 
-    this.yPos = yPosition - this.height / 2;
-    name.onload = function() {
-        console.log("a");
-        ctx.drawImage(name, xPosition - this.width / 2, yPosition - this.height / 2);
-    }
-    this.image = name;
+let img = new Asset('mainShip.png', canvas.width / 2, canvas.height - 80);
 
+function Asset(imageSrc, xStartPosition, yStartPosition){
+    let image = new Image();
+    image.src = 'images/' + imageSrc;
+    this.width = image.width;
+    this.height = image.height;
+    //start position
+    this.xPos = xStartPosition - this.width / 2;
+    this.yPos = yStartPosition - this.height / 2;
+    image.onload = function() {
+        console.log("image '" + image.src + "' loaded");
+        ctx.drawImage(image, xStartPosition - this.width / 2, yStartPosition - this.height / 2);
+    }
+    this.image = image;
 }
 //Draw in assets
 
@@ -35,7 +35,6 @@ document.onkeydown = function(e) {
             moveObject(img, "DOWN", 15, "Stick on Screen");
             break;
     }
-    
     //ctx.drawImage(img, img., img.y);
 }
 function moveObject(object, direction, distance, func){
