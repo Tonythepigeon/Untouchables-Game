@@ -1,40 +1,71 @@
-var img = new Image();
+//var img = new Image();
 var canvas = document.getElementById('myCanvas');
 var ctx = canvas.getContext('2d');
 ctx.canvas.width  = window.innerWidth - 20;
 ctx.canvas.height = window.innerHeight - 20;
-var x = 0, y = 0, speed = 25;
+var img = new Image();
+var img = new newAsset(img, 'mainShip.png', canvas.width / 2, canvas.height - 80, 120, 120);
+function newAsset(name, imageSrc, xPosition, yPosition, inWidth, inHeight){
+    name.src = 'images/' + imageSrc;
+    this.width = inWidth; 
+    this.height = inHeight;
+    this.xPos = xPosition - this.width / 2; 
+    this.yPos = yPosition - this.height / 2;
+    name.onload = function() {
+        console.log("a");
+        ctx.drawImage(name, xPosition - this.width / 2, yPosition - this.height / 2);
+    }
+    this.image = name;
 
-//Draw in assets
-img.onload = function() {
-    ctx.drawImage(img, 0, 0);
 }
-img.src = 'images/character.gif';
+//Draw in assets
+
 document.onkeydown = function(e) {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
     switch (e.key) {
         case "ArrowLeft":
-            x = x - speed;
+            moveObject(img, "LEFT", 15, "Stick on Screen");
             break;
         case "ArrowUp":
-            y = y - speed;
+            moveObject(img, "UP", 15, "Stick on Screen");
             break;
         case "ArrowRight":
-            x = x + speed;
+            moveObject(img, "RIGHT", 15, "Stick on Screen");
             break;
         case "ArrowDown":
-            y = y + speed;
+            moveObject(img, "DOWN", 15, "Stick on Screen");
             break;
     }
-    if(x > canvas.width - img.width){
-        x = canvas.width - img.width;
-    }else if(x < 0){
-        x = 0;
+    
+    //ctx.drawImage(img, img., img.y);
+}
+function moveObject(object, direction, distance, func){
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    direction = direction.toUpperCase();
+    switch(direction){
+        case "UP" || "U":
+            object.yPos -= distance;
+            break;
+        case "DOWN" || "D":
+            object.yPos += distance;
+            break;
+        case "RIGHT" || "R":
+            object.xPos += distance;
+            break;
+        case "LEFT" || "L":
+            object.xPos -= distance;
+            break;
     }
-    if(y > canvas.height - img.height){
-        y = canvas.height - img.height;
-    }else if(y < 0){
-        y = 0;
+    if(func == "Stick on Screen"){
+        if(object.xPos > canvas.width - object.width){
+            object.xPos = canvas.width - object.width;
+        }else if(object.xPos < 0){
+            object.xPos = 0;
+        }
+        if(object.yPos > canvas.height - object.height){
+            object.yPos = canvas.height - object.height;
+        }else if(object.yPos < 0){
+            object.yPos = 0;
+        }
     }
-    ctx.drawImage(img, x, y);
+    ctx.drawImage(object.image, object.xPos, object.yPos, object.width, object.height);
 }
