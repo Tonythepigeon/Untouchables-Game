@@ -6,9 +6,11 @@ let keyMap = new Object();
 keyMap["ArrowDown"] = false;
 ctx.canvas.width  = window.innerWidth - 20;
 ctx.canvas.height = window.innerHeight - 20;
+var elementsOnCanvas = new Array;
 function Asset(imageSrc, xStartPosition, yStartPosition, xScale, yScale){
     let image = new Image();
     image.src = 'images/' + imageSrc;
+    this.name = imageSrc;
     this.width = image.width * xScale;
     this.height = image.height * yScale;
     //start position
@@ -23,15 +25,17 @@ function Asset(imageSrc, xStartPosition, yStartPosition, xScale, yScale){
     this.draw = function(){
         ctx.drawImage(this.image, this.xPos, this.yPos, this.width, this.height);
     }
+    elementsOnCanvas.push(this);
 }
 
 function PlayerObject(imageSrc, xStartPosition, yStartPosition, acceleration, aerodynamicCoeff){
-    let sprite = new Asset('mainShip.png', xStartPosition, yStartPosition, 1, 1);
+    let sprite = new Asset(imageSrc, xStartPosition, yStartPosition, 1, 1);
     this.sprite = sprite;
     this.xVel = 0;
     this.yVel = 0;
     this.acceleration = acceleration
     this.friction = aerodynamicCoeff;
+
     this.moveUp = function(){
         this.yVel -= acceleration;
     }
@@ -44,11 +48,15 @@ function PlayerObject(imageSrc, xStartPosition, yStartPosition, acceleration, ae
     this.moveLeft = function(){
         this.xVel -= acceleration;
     }
+    this.generateBulle = function(){
+        generateBullet("redLasor.gif", this.sprite.xPos, this.sprite.yPos, 2, 2);
+    }
     this.updatePlayer = function(){
         this.xVel *= this.friction;
         this.yVel *= this.friction;
         this.sprite.xPos += this.xVel;
         this.sprite.yPos += this.yVel;
+        
     }
     this.draw = function(){
         sprite.draw();
@@ -63,6 +71,8 @@ let player = new PlayerObject(
     STARTING_ACCELERATION,
     STARTING_FRICTION
 );
+var Asset = new PlayerObject("orangeShip.png", 200, 200, 1, 1, false);
+
 //let player = new Asset('mainShip.png', canvas.width / 2,canvas.height - 80,);
 //Draw in assets
 
@@ -84,13 +94,19 @@ function handleKeyboardInput() {
         player.moveLeft();
     if(keyMap["ArrowRight"])
         player.moveRight();
+    if(keyMap[" "]){
+        //let a = new generateBullet("redLasor.gif", player.sprite.xPos, player.sprite.yPos, 2, 2);
+    }
 }
 
 function drawGame(){
     handleKeyboardInput();
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     player.updatePlayer();
-    player.draw();
+    detectColision();
+    elementsOnCanvas.forEach(function(element) {
+        element.draw();
+    });
     window.requestAnimationFrame(drawGame);
 }
 
@@ -109,4 +125,30 @@ function moveObject(object, direction, distance, func){
         }
     }
     ctx.drawImage(object.image, object.xPos, object.yPos, object.width, object.height);
+}
+
+function detectColision(){
+    elementsOnCanvas.forEach(function(element) {
+        elementsOnCanvas.forEach(function(movingObject) {
+            if(movingObject != element && movingObject.xPos - movingObject.width / 2 <=  element.xPos + element.width / 2 && movingObject.xPos + movingObject.width / 2 >= element.xPos - element.width / 2 
+                && movingObject.yPos + movingObject.height / 2 >=  element.yPos - element.height / 2 && movingObject.yPos - movingObject.height / 2 <= element.yPos + element.height / 2){
+                    console.log("Colision detected between: " + movingObject.name + " and " + element.name);
+            }
+        });
+    });
+}
+
+function generateBullet(imageSrc, xStartPosition, yStartPosition, xVelocity, yVelocity){
+    let sprite = new Asset(imageSrc, xStartPosition, yStartPosition, 1, 1);
+    //this.sprite = sprite;
+    this.xVel = xVelocity;
+    this.yVel = yVelocity;
+    //elementsOnCanvas.push(this);
+
+    this.draw = function(){
+        this.sprite.xPos += this.xVel;
+        this.sprite.yPos += this.yVel;
+        sprite.draw();
+    }
+
 }
