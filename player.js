@@ -25,7 +25,6 @@ function PlayerObject(imageSrc, xStartPosition, yStartPosition, acceleration, ae
 	}
 
 	this.fireBullet = function(){
-		console.log(this.sprite.xPos);
 		this.bullets.newBullet(
 			darkBullet,
 			this.xPos + this.sprite.width/2,

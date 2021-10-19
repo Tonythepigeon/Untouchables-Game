@@ -41,7 +41,6 @@ function handleKeyboardInput() {
         player.moveRight();
     if(keyMap[" "]){
         if(fireTimer == 0) {
-            console.log("ee");
             player.fireBullet();
         }
     }

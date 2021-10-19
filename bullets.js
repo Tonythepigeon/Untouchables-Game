@@ -12,11 +12,9 @@ function Bullets(){
 		fireTimer++;
 	}
 	this.drawAndUpdateBullets = function(){
-		console.log(bullets.length);
 		for(let i = 0; i < bullets.length; i++){
 			bullets[i].draw();
 			bullets[i].moveForward(1);
-			console.log(bullets[i].xpos);
 		}
 	}
 }
@@ -31,7 +29,6 @@ function Bullet(bulletSprite, bulletType, bulletSpeed, bulletDamage, bulletSize)
 	this.xDir = 0;
 	this.yDir = 1;
 	this.draw = function () {
-		console.log(this.xPos +" aaaa " + this.yPos)
 		bulletSprite.drawClone(this.xPos, this.yPos, this.size)
 	}
 
@@ -47,3 +44,4 @@ function Bullet(bulletSprite, bulletType, bulletSpeed, bulletDamage, bulletSize)
 		this.yDir = yDir;
 	}
 }
+
