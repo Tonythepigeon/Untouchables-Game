@@ -1,7 +1,7 @@
 function PlayerObject(imageSrc, xStartPosition, yStartPosition, acceleration, aerodynamicCoeff){
 	let sprite = new Asset(imageSrc, 0, 0, 1, 1);
-	this.bullets = new Bullets();
 	this.sprite = sprite;
+	this.bullets = new Bullets();
 	this.xVel = 0;
 	this.yVel = 0;
 	this.xPos = xStartPosition;
@@ -43,6 +43,6 @@ function PlayerObject(imageSrc, xStartPosition, yStartPosition, acceleration, ae
 
 	this.draw = function(){
 		this.bullets.drawAndUpdateBullets();
-		sprite.drawClone(this.xPos,this.yPos, 1);
+		this.sprite.drawClone(this.xPos,this.yPos, 1);
 	}
 }

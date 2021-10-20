@@ -1,14 +1,20 @@
 const STARTING_ACCELERATION = 1;
 const STARTING_FRICTION = 0.9;
-const STARTING_FIRE_RATE = 10; //how many frames until you can fire another bullet
+const STARTING_FIRE_RATE = 20; //how many frames until you can fire another bullet
 let fireTimer = 0;
 let canvas = document.getElementById('myCanvas');
 let ctx = canvas.getContext('2d');
 let keyMap = new Object();
-
+//keyboard listeners
+document.onkeydown = function(e) {
+    keyMap[e.key] = true;
+}
+document.onkeyup = function(e) {
+    keyMap[e.key] = false;
+}
 ctx.canvas.width  = window.innerWidth - 20;
 ctx.canvas.height = window.innerHeight - 20;
-
+//init global variables
 let player = new PlayerObject(
     'mainShip.png',
     canvas.width / 2,
@@ -16,19 +22,22 @@ let player = new PlayerObject(
     STARTING_ACCELERATION,
     STARTING_FRICTION
 );
-let darkBulletSprite = new Asset('redLasor.gif', 0, 0, .1, .1);
-let darkBullet = new Bullet(darkBulletSprite,10,1,10,1)
-//let player = new Asset('mainShip.png', canvas.width / 2,canvas.height - 80,);
-//Draw in assets
-
-document.onkeydown = function(e) {
-    keyMap[e.key] = true;
-}
-document.onkeyup = function(e) {
-    keyMap[e.key] = false;
-}
+let darkBulletSprite = new Asset(
+    'redLasor.gif',
+    0,
+    0,
+    .1,
+    .1
+);
+let darkBullet = new Bullet(darkBulletSprite,
+    10,
+    1,
+    10,
+    1
+);
 
 window.requestAnimationFrame(drawGame);
+
 
 function handleKeyboardInput() {
     if(keyMap["ArrowDown"])

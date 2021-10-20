@@ -1,5 +1,6 @@
 function Bullets(){
 	let bullets = [];
+	this.bullets = bullets;
 	//create bullet
 	this.newBullet = function(bulletObject, xPos, yPos, xDir, yDir){
 		//clone bullet object
@@ -8,13 +9,13 @@ function Bullets(){
 		//give it properties
 		bullet.initBullet(xPos, yPos, xDir, yDir);
 		//add it to the array
-		bullets.push(bullet);
+		this.bullets.push(bullet);
 		fireTimer++;
 	}
 	this.drawAndUpdateBullets = function(){
 		for(let i = 0; i < bullets.length; i++){
-			bullets[i].draw();
-			bullets[i].moveForward(1);
+			this.bullets[i].draw();
+			this.bullets[i].moveForward(1);
 		}
 	}
 }

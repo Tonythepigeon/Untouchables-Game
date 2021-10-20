@@ -19,4 +19,12 @@ function Asset(imageSrc, xStartPosition, yStartPosition, xScale, yScale){
 	this.drawClone = function(xPos, yPos, size){
 		ctx.drawImage(this.image, xPos, yPos, this.width*size, this.height*size);
 	}
+
+	this.updateImage = function(imageSrc){
+		let image = new Image();
+		image.src = 'images/' + imageSrc;
+		this.width = image.width;
+		this.height = image.height;
+		this.image = image;
+	}
 }
