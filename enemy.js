@@ -18,7 +18,7 @@ function EnemyContainer(imageSrcs, xStartPosition, yStartPosition) {
 			size,
 			speed,
 			this.wobble,
-			10
+			50
 		);
 		this.enemies.push(enemy);
 	}
@@ -49,6 +49,12 @@ function Enemy(enemySprite, bulletObject, xStartPosition, yStartPosition, size, 
 	this.getX = function () {
 		return this.xPos + this.sinObj.getSinX(this.t);
 	}
+	this.getXDelta = function(){
+		return this.speed+this.sinObj.getSinXDelta(this.t);
+	}
+	this.getYDelta = function(){
+		return this.sinObj.getSinYDelta(this.t);
+	}
 	this.getY = function () {
 		return this.yPos + this.sinObj.getSinY(this.t);
 	}
@@ -72,8 +78,8 @@ function Enemy(enemySprite, bulletObject, xStartPosition, yStartPosition, size, 
 				this.bulletObject,
 				this.getX(),
 				this.getY(),
-				this.speed,
-				10,
+				this.getXDelta(),
+				10+this.getYDelta(),
 				1
 			);
 		}
@@ -84,8 +90,14 @@ function SinContainer(xAmp, yAmp, xFreq, yFreq) {
 	this.getSinX = function (time) {
 		return Math.sin(time * xFreq) * xAmp;
 	}
+	this.getSinXDelta = function (time) {
+		return Math.cos(time * xFreq) * xAmp * xFreq;
+	}
 	this.getSinY = function (time) {
 		return Math.sin(time * yFreq) * yAmp;
+	}
+	this.getSinYDelta = function (time) {
+		return Math.cos(time * yFreq) * yAmp *yFreq;
 	}
 
 }

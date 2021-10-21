@@ -56,7 +56,7 @@ function handleKeyboardInput() {
             fireTimer++;
         }
     }
-    if(frame % 40 == 0)
+    if(frame % (200) == 0)
         enemyContainer.newEnemy(0,darkBullet,1,3);
 }
 
