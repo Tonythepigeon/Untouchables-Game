@@ -36,8 +36,8 @@ function PlayerObject(
 			darkBullet,
 			this.xPos,
 			this.yPos,
-			this.xVel,
-			-10+this.yVel,
+			(this.xVel)/2,
+			-10+(this.yVel)/2,
 			1
 		);
 	};

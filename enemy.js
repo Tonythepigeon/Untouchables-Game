@@ -1,3 +1,6 @@
+//stores enemies
+//imageSrcs: Array of string file names
+//image
 function EnemyContainer(imageSrcs, xStartPosition, yStartPosition) {
 	this.xPos = xStartPosition
 	this.yPos = yStartPosition
