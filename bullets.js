@@ -4,13 +4,12 @@ function Bullets(){
 	//create bullet
 	this.newBullet = function(bulletObject, xPos, yPos, xDir, yDir){
 		//clone bullet object
-		b = bulletObject;
+		let b = bulletObject;
 		let bullet = new Bullet(b.sprite, b.type, b.speed, b.damage, b.size);
 		//give it properties
 		bullet.initBullet(xPos, yPos, xDir, yDir);
 		//add it to the array
 		this.bullets.push(bullet);
-		fireTimer++;
 	}
 	this.drawAndUpdateBullets = function(){
 		for(let i = 0; i < bullets.length; i++){

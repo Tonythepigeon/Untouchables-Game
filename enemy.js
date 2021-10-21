@@ -1,33 +1,91 @@
-function EnemyObject(imageSrc, xStartPosition, yStartPosition) {
-  let enemySprite = new Asset(imageSrc, 0, 0, 1, 1);
-  this.sprite = enemySprite;
-  this.bullets = new Bullets();
-  this.randomShoot = int(random(100, 150));
-  this.health = 2;
-  this.xVel = 0;
-  this.yVel = 5;
-  this.xPos = xStartPosition;
-  this.yPos = yStartPosition;
+function EnemyContainer(imageSrcs, xStartPosition, yStartPosition) {
+	this.xPos = xStartPosition
+	this.yPos = yStartPosition
+	this.wobble = new SinContainer(10,10,.1,.12);
+	this.enemySprites = []
+	for (let i = 0; i < imageSrcs.length; i++) {
+		let sprite = new Asset(imageSrcs[i], 0, 0, 1, 1);
+		this.enemySprites.push(sprite)
+	}
 
-  this.fireBullet = function () {
-    this.bullets.newBullet(
-      darkBullet,
-      this.xPos - 3 + this.sprite.width / 2,
-      this.yPos,
-      0,
-      10,
-      1
-    );
-  };
+	this.enemies = [];
+	this.newEnemy = function(enemyTypeIndex, bulletObject, size, speed) {
+		let enemy = new Enemy(
+			this.enemySprites[enemyTypeIndex],
+			bulletObject,
+			this.xPos,
+			this.yPos,
+			size,
+			speed,
+			this.wobble,
+			10
+		);
+		this.enemies.push(enemy);
+	}
+	this.update = function(){
+		for (let i = 0; i < this.enemies.length; i++) {
+			this.enemies[i].update();
+		}
+	}
+	this.draw = function () {
+		for (let i = 0; i < this.enemies.length; i++) {
+			this.enemies[i].draw();
+		}
+	}
+}
 
+function Enemy(enemySprite, bulletObject, xStartPosition, yStartPosition, size, speed, xySin, bulletFreq) {
+	this.t = 0;
+	this.sprite = enemySprite;
 
-  this.updateEnemy = function () {
-    this.yPos += this.yVel;
-  };
+	this.speed = speed;
+	this.sinObj = xySin;
+	this.size = size;
+	this.xPos = xStartPosition;
+	this.yPos = yStartPosition;
+	this.bulletFreq = bulletFreq;
+	this.bulletObject = bulletObject;
+	this.bullets = new Bullets();
+	this.getX = function () {
+		return this.xPos + this.sinObj.getSinX(this.t);
+	}
+	this.getY = function () {
+		return this.yPos + this.sinObj.getSinY(this.t);
+	}
+	this.draw = function () {
+		this.sprite.drawClone(this.getX(), this.getY(), this.size);
+		this.bullets.drawAndUpdateBullets();
+	}
 
+	this.update = function (speedMultiplier) {
+		this.t++;
+		this.xPos += this.speed;
+		//bounce off walls
+		if (this.xPos > ctx.canvas.width || this.xPos < 0) {
+			this.speed *= -1;
+			this.xPos += this.speed*2;
+			this.yPos += Math.abs(this.speed) * 3; //TODO maybe replace with y speed or some kind of difficulty variable?
+		}
 
-  this.draw = function () {
-    this.bullets.drawAndUpdateBullets();
-    this.sprite.drawClone(this.xPos, this.yPos, 1);
-  };
+		if(this.t%this.bulletFreq == 0){
+			this.bullets.newBullet(
+				this.bulletObject,
+				this.getX() - 3 + this.sprite.width / 2,
+				this.getY(),
+				0,
+				10,
+				1
+			);
+		}
+	}
+}
+
+function SinContainer(xAmp, yAmp, xFreq, yFreq) {
+	this.getSinX = function (time) {
+		return Math.sin(time * xFreq) * xAmp;
+	}
+	this.getSinY = function (time) {
+		return Math.sin(time * yFreq) * yAmp;
+	}
+
 }
