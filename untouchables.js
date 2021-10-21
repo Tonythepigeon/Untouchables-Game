@@ -6,12 +6,12 @@ let frame = 0;
 var canvas = document.getElementById('myCanvas');
 let ctx = canvas.getContext('2d');
 let keyMap = new Object();
-var elementsOnCanvas = new Array();
+let elementsOnCanvas = new Array();
 
-var isGameOver;
-var score = 0;
-var scoreDisplay = document.getElementById('score');
-
+let isGameOver;
+let score = 0;
+let scoreDisplay = document.getElementById('score');
+let healthDisplay = document.getElementById('health');
 //keyboard listeners
 document.onkeydown = function (e) {
     keyMap[e.key] = true;

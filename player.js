@@ -64,7 +64,9 @@ function PlayerObject(
 	};
 
 	this.draw = function () {
+		healthDisplay.innerText = this.health;
 		this.bullets.drawAndUpdateBullets();
 		this.sprite.drawClone(this.xPos, this.yPos, 1);
+
 	};
 }
