@@ -68,11 +68,13 @@ function PlayerObject(
 		this.bullets.drawAndUpdateBullets();
 		this.sprite.drawClone(this.xPos, this.yPos, 1);
 		if(this.health < 3){
-			ctx.globalAlpha = 0.09;
-			canvas.style.filter = "contrast(110%) saturate(70%)"
+			ctx.globalAlpha = 0.12;
+			canvas.style.filter = "contrast(130%) saturate(70%)"
 			if(this.health < 2){
 				ctx.globalAlpha = 0.24;
-				canvas.style.filter = "contrast(150%) blur(3px) saturate(70%)"
+				this.xPos += ((Math.random()-.5)*3)
+				this.yPos += ((Math.random()-.5)*3)
+				canvas.style.filter = "contrast(150%) blur("+ (Math.random()*3)+"px) saturate(70%)"
 			}
 			if(this.health < 1){
 				ctx.globalAlpha = 0.3;
