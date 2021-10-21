@@ -15,6 +15,7 @@ function PlayerObject(
 	this.yPos = yStartPosition;
 	this.acceleration = acceleration;
 	this.friction = aerodynamicCoeff;
+	elementsOnCanvas.push(this);
 	this.moveUp = function () {
 		this.yVel -= this.acceleration;
 	};

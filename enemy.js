@@ -11,7 +11,7 @@ function EnemyContainer(imageSrcs, xStartPosition, yStartPosition) {
 		this.enemySprites.push(sprite)
 	}
 
-	this.enemies = [];
+	this.enemies = new Array();
 	this.newEnemy = function(enemyTypeIndex, bulletObject, size, speed) {
 		let enemy = new Enemy(
 			this.enemySprites[enemyTypeIndex],
@@ -26,8 +26,12 @@ function EnemyContainer(imageSrcs, xStartPosition, yStartPosition) {
 		this.enemies.push(enemy);
 	}
 	this.update = function(){
-		for (let i = 0; i < this.enemies.length; i++) {
+		let deadEnemies = this.enemies;
+		for (let i = this.enemies.length - 1; i >= 0; i--) {
 			this.enemies[i].update();
+			if(this.enemies[i].health <= 0){
+				deadEnemies = deadEnemies.splice(i - (this.enemies.length - deadEnemies.length), 1);
+			}
 		}
 	}
 	this.draw = function () {
@@ -41,6 +45,7 @@ function Enemy(enemySprite, bulletObject, xStartPosition, yStartPosition, size, 
 	this.t = 0;
 	this.sprite = enemySprite;
 
+	this.health = 3;
 	this.speed = speed;
 	this.sinObj = xySin;
 	this.size = size;
@@ -49,6 +54,7 @@ function Enemy(enemySprite, bulletObject, xStartPosition, yStartPosition, size, 
 	this.bulletFreq = bulletFreq;
 	this.bulletObject = bulletObject;
 	this.bullets = new Bullets();
+	elementsOnCanvas.push(this);
 	this.getX = function () {
 		return this.xPos + this.sinObj.getSinX(this.t);
 	}

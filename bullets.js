@@ -1,3 +1,4 @@
+var detector = false;
 function Bullets(){
 	let bullets = [];
 	this.bullets = bullets;
@@ -12,9 +13,15 @@ function Bullets(){
 		this.bullets.push(bullet);
 	}
 	this.drawAndUpdateBullets = function(){
-		for(let i = 0; i < bullets.length; i++){
+		let deadBullets = bullets;
+		for(let i = bullets.length - 1; i >= 0; i--){
 			this.bullets[i].draw();
 			this.bullets[i].moveForward(1);
+			detectCollision(this.bullets[i]);
+			if(detector){
+				detector = false;
+				deadBullets = deadBullets.splice(i - (bullets.length - deadBullets.length), 1);
+			}
 		}
 	}
 }
@@ -45,3 +52,20 @@ function Bullet(bulletSprite, bulletType, bulletSpeed, bulletDamage, bulletSize)
 	}
 }
 
+function detectCollision(bullet){
+    elementsOnCanvas.forEach(function(element) {
+		if(bullet.xPos <=  element.xPos + element.sprite.image.width / 2 && bullet.xPos >= element.xPos - element.sprite.image.width / 2
+			&& bullet.yPos >=  element.yPos - element.sprite.image.height / 2 && bullet.yPos <= element.yPos + element.sprite.image.height / 2){
+			if(bullet.yDir < 0 && element.sprite.name != "mainShip.png"){ //You hit them
+				score += 100;
+				element.health -= 1;
+				detector = true;
+				return;
+			}else if(bullet.yDir > 0 && element.sprite.name == "mainShip.png"){ //You got hit
+				player.health--;
+				detector = true;
+				return;
+			}
+		}
+	});
+}

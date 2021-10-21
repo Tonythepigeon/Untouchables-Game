@@ -3,6 +3,8 @@ function Asset(imageSrc, xStartPosition, yStartPosition, xScale, yScale){
 	image.src = 'images/' + imageSrc;
 	this.width = image.width * xScale;
 	this.height = image.height * yScale;
+	this.name = imageSrc;
+
 	//start position
 	this.xPos = xStartPosition - this.width / 2;
 	this.yPos = yStartPosition - this.height / 2;

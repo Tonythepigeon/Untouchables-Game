@@ -6,6 +6,7 @@ let frame = 0;
 let canvas = document.getElementById('myCanvas');
 let ctx = canvas.getContext('2d');
 let keyMap = new Object();
+var elementsOnCanvas = new Array();
 
 var isGameOver;
 var score = 0;
@@ -63,8 +64,6 @@ function handleKeyboardInput() {
         if (fireTimer == 0) {
             player.fireBullet();
             fireTimer++;
-            player.health--; // GAME OVE TEST
-            score += 100; // SCORE TEST
         }
     }
     if (frame % (200) == 0)
@@ -116,17 +115,6 @@ function moveObject(object, direction, distance, func) {
     ctx.drawImage(object.image, object.xPos, object.yPos, object.width, object.height);
 }
 
-
-function detectCollision() {
-    elementsOnCanvas.forEach(function (element) {
-        elementsOnCanvas.forEach(function (movingObject) {
-            if (movingObject != element && movingObject.xPos - movingObject.width / 2 <= element.xPos + element.width / 2 && movingObject.xPos + movingObject.width / 2 >= element.xPos - element.width / 2
-                && movingObject.yPos + movingObject.height / 2 >= element.yPos - element.height / 2 && movingObject.yPos - movingObject.height / 2 <= element.yPos + element.height / 2) {
-                console.log("Colision detected between: " + movingObject.name + " and " + element.name);
-            }
-        });
-    });
-}
 
 function gameOver() {
     document.getElementById("game-over").style.display = "block";
