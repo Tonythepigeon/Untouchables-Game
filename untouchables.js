@@ -10,18 +10,6 @@ let keyMap = new Object();
 var isGameOver;
 var score = 0;
 
-function init() {
-    document.getElementById('play-again'), addEventListener('click', function () {
-        reset();
-    });
-
-    reset();
-    fireTimer = 0;
-    main();
-}
-
-
-
 //keyboard listeners
 document.onkeydown = function (e) {
     keyMap[e.key] = true;
@@ -29,6 +17,10 @@ document.onkeydown = function (e) {
 document.onkeyup = function (e) {
     keyMap[e.key] = false;
 }
+document.getElementById("play-again").addEventListener("click", function () {
+  reset();
+});
+
 ctx.canvas.width = window.innerWidth - 20;
 ctx.canvas.height = window.innerHeight - 20;
 //init global variables
@@ -81,11 +73,12 @@ function drawGame() {
     frame++;
     handleKeyboardInput();
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    enemyContainer.update();
+    
     enemyContainer.draw();
     if (player.health > 0) {
         player.updatePlayer();
         player.draw();
+        enemyContainer.update();
     } else {
         gameOver();
     }
@@ -134,19 +127,17 @@ function detectCollision() {
 function gameOver() {
     document.getElementById("game-over").style.display = "block";
     document.getElementById("game-over-overlay").style.display = "block";
-    isGameOver = true;
+
 }
 
 // Reset game to original state
 function reset() {
     document.getElementById('game-over').style.display = 'none';
     document.getElementById('game-over-overlay').style.display = 'none';
-    isGameOver = false;
-    gameTime = 0;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    player.health = 3;
     score = 0;
 
     enemies = [];
     bullets = [];
-
-    player.pos = [50, canvas.height / 2]; 
 };
