@@ -13,11 +13,11 @@ function Asset(imageSrc, xStartPosition, yStartPosition, xScale, yScale){
 	this.image = image;
 
 	this.draw = function(){
-		ctx.drawImage(this.image, this.xPos, this.yPos, this.width, this.height);
+		ctx.drawImage(this.image, this.xPos- this.width / 2, this.yPos - this.height / 2, this.width, this.height);
 	}
 
 	this.drawClone = function(xPos, yPos, size){
-		ctx.drawImage(this.image, xPos, yPos, this.width*size, this.height*size);
+		ctx.drawImage(this.image, xPos - (this.width*size) / 2, yPos - (this.height*size) / 2, this.width*size, this.height*size);
 	}
 
 	this.updateImage = function(imageSrc){

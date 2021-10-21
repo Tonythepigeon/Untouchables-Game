@@ -70,9 +70,9 @@ function Enemy(enemySprite, bulletObject, xStartPosition, yStartPosition, size, 
 		if(this.t%this.bulletFreq == 0){
 			this.bullets.newBullet(
 				this.bulletObject,
-				this.getX() - 3 + this.sprite.width / 2,
+				this.getX(),
 				this.getY(),
-				0,
+				this.speed,
 				10,
 				1
 			);
