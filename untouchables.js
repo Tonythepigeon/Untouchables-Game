@@ -47,6 +47,13 @@ let darkBullet = new Bullet(darkBulletSprite,
     1
 );
 let enemyContainer = new EnemyContainer(["alienShip.gif", "mainShip.png"], 100, 100);
+let background = new Asset(
+    '2k_stars.jpg',
+    0,
+    0,
+    1,
+    1
+);
 
 window.requestAnimationFrame(drawGame);
 
@@ -72,9 +79,10 @@ function handleKeyboardInput() {
 
 function drawGame() {
     frame++;
+
     handleKeyboardInput();
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
+    drawBackground();
     scoreDisplay.innerHTML = score;
 
     enemyContainer.draw();
@@ -83,6 +91,7 @@ function drawGame() {
         player.draw();
         enemyContainer.update();
     } else {
+        player.draw();
         gameOver();
     }
     if (fireTimer != 0) {
@@ -92,9 +101,18 @@ function drawGame() {
         fireTimer = 0;
     }
     //requests next frame (don't call anything after)
-    window.requestAnimationFrame(drawGame);
+    if(player.health > 0)
+        window.requestAnimationFrame(drawGame);
 }
 
+function drawBackground(){
+    ctx.save();
+    ctx.translate(canvas.width,0);
+    ctx.rotate(90*Math.PI/180);
+    background.drawRaw(frame%canvas.height,0,canvas.height,canvas.width);
+    background.drawRaw(frame%canvas.height-canvas.height,0,canvas.height,canvas.width);
+    ctx.restore();
+}
 
 
 //OLD MOVE OBJECT CODE
@@ -119,15 +137,16 @@ function moveObject(object, direction, distance, func) {
 function gameOver() {
     document.getElementById("game-over").style.display = "block";
     document.getElementById("game-over-overlay").style.display = "block";
-
 }
 
 // Reset game to original state
 function reset() {
+    canvas.style.filter = ""
     document.getElementById('game-over').style.display = 'none';
     document.getElementById('game-over-overlay').style.display = 'none';
     player.health = 3;
     score = 0;
     enemies = [];
     bullets = [];
+    drawGame();
 };
