@@ -88,7 +88,7 @@ function Enemy(enemySprite, bulletObject, xStartPosition, yStartPosition, size, 
 				this.getX(),
 				this.getY(),
 				this.getXDelta(),
-				10+this.getYDelta(),
+				7+this.getYDelta(),
 				1
 			);
 		}
