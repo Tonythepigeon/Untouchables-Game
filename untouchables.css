@@ -15,6 +15,7 @@ html, body {
 }
 
 #instructions {
+    margin-right: 70%;
     font-family: sans-serif;
     color: white;
 }
