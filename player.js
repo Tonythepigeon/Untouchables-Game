@@ -13,6 +13,7 @@ function PlayerObject(
 	this.yVel = 0;
 	this.xPos = xStartPosition;
 	this.yPos = yStartPosition;
+	this.size = 1;
 	this.acceleration = acceleration;
 	this.friction = aerodynamicCoeff;
 	elementsOnCanvas.push(this);
@@ -46,8 +47,20 @@ function PlayerObject(
 	this.updatePlayer = function () {
 		this.xVel *= this.friction;
 		this.yVel *= this.friction;
-		this.xPos += this.xVel;
-		this.yPos += this.yVel;
+		if(this.xPos < 0 + this.sprite.width / 2 + 1){ //Keeps player in the width of the canvas
+			this.xPos = 0 + this.sprite.width / 2 + 1;
+		}else if(this.xPos > canvas.width - this.sprite.width / 2 - 1){
+			this.xPos = canvas.width - this.sprite.width / 2 - 1
+		}else{
+			this.xPos += this.xVel;
+		}
+		if(this.yPos < canvas.height / 2 + this.sprite.height / 2 + 1){ //Keeps player in bottom half of screen
+			this.yPos = canvas.height / 2 + this.sprite.height / 2 + 1;
+		}else if(this.yPos > canvas.height - this.sprite.height / 2 - 1){
+			this.yPos = canvas.height - this.sprite.height / 2 - 1
+		}else{
+			this.yPos += this.yVel;
+		}
 	};
 
 	this.draw = function () {

@@ -3,7 +3,7 @@ const STARTING_FRICTION = 0.9;
 const STARTING_FIRE_RATE = 20; //how many frames until you can fire another bullet
 let fireTimer = 0;
 let frame = 0;
-let canvas = document.getElementById('myCanvas');
+var canvas = document.getElementById('myCanvas');
 let ctx = canvas.getContext('2d');
 let keyMap = new Object();
 var elementsOnCanvas = new Array();
@@ -46,7 +46,7 @@ let darkBullet = new Bullet(darkBulletSprite,
     10,
     1
 );
-let enemyContainer = new EnemyContainer(["redLasor.gif", "mainShip.png"], 100, 100);
+let enemyContainer = new EnemyContainer(["alienShip.gif", "mainShip.png"], 100, 100);
 
 window.requestAnimationFrame(drawGame);
 
@@ -67,7 +67,7 @@ function handleKeyboardInput() {
         }
     }
     if (frame % (200) == 0)
-        enemyContainer.newEnemy(0, darkBullet, 1, 3);
+        enemyContainer.newEnemy(0, darkBullet, .5, 3);
 }
 
 function drawGame() {

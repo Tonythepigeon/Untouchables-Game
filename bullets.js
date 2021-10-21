@@ -21,6 +21,8 @@ function Bullets(){
 			if(detector){
 				detector = false;
 				deadBullets = deadBullets.splice(i - (bullets.length - deadBullets.length), 1);
+			}else if(this.bullets[i].yPos > canvas.height || this.bullets[i].yPos < 0){
+				deadBullets = deadBullets.splice(i - (bullets.length - deadBullets.length), 1);
 			}
 		}
 	}
@@ -54,8 +56,8 @@ function Bullet(bulletSprite, bulletType, bulletSpeed, bulletDamage, bulletSize)
 
 function detectCollision(bullet){
     elementsOnCanvas.forEach(function(element) {
-		if(bullet.xPos <=  element.xPos + element.sprite.image.width / 2 && bullet.xPos >= element.xPos - element.sprite.image.width / 2
-			&& bullet.yPos >=  element.yPos - element.sprite.image.height / 2 && bullet.yPos <= element.yPos + element.sprite.image.height / 2){
+		if(bullet.xPos <=  element.xPos + element.sprite.image.width * element.size / 2 && bullet.xPos >= element.xPos - element.sprite.image.width * element.size / 2
+			&& bullet.yPos >=  element.yPos - element.sprite.image.height  * element.size / 2 && bullet.yPos <= element.yPos + element.sprite.image.height * element.size / 2){
 			if(bullet.yDir < 0 && element.sprite.name != "mainShip.png"){ //You hit them
 				score += 100;
 				element.health -= 1;
