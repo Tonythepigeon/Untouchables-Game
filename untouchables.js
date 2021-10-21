@@ -9,6 +9,7 @@ let keyMap = new Object();
 
 var isGameOver;
 var score = 0;
+var scoreDisplay = document.getElementById('score');
 
 //keyboard listeners
 document.onkeydown = function (e) {
@@ -62,7 +63,8 @@ function handleKeyboardInput() {
         if (fireTimer == 0) {
             player.fireBullet();
             fireTimer++;
-            player.health--;
+            player.health--; // GAME OVE TEST
+            score += 100; // SCORE TEST
         }
     }
     if (frame % (200) == 0)
@@ -74,6 +76,8 @@ function drawGame() {
     handleKeyboardInput();
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
+    scoreDisplay.innerHTML = score;
+
     enemyContainer.draw();
     if (player.health > 0) {
         player.updatePlayer();
@@ -134,10 +138,8 @@ function gameOver() {
 function reset() {
     document.getElementById('game-over').style.display = 'none';
     document.getElementById('game-over-overlay').style.display = 'none';
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
     player.health = 3;
     score = 0;
-
     enemies = [];
     bullets = [];
 };

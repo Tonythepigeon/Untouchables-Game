@@ -5,6 +5,29 @@ html, body {
     background-color: rgb(43, 43, 43);
 }
 
+.wrapper {
+    width: 100%;
+    text-align: center;
+    position:fixed;
+    z-index: 1;
+    margin: 0 auto;
+    margin-top: 4em;
+}
+
+#instructions {
+    font-family: sans-serif;
+    color: white;
+}
+
+#score {
+    margin-left: 70%;
+    color: white;
+    font-size: 4em;
+}
+
+.key {
+    color: #7affca;
+}
 
 #game-over, #game-over-overlay {
     margin: auto;
@@ -13,7 +36,7 @@ html, body {
     left: 50%;
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-    z-index: 1;
+    z-index: 2;
     display: none;
 }
 
