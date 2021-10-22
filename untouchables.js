@@ -4,7 +4,7 @@ fpsInterval = 1000 / fps;
 then = Date.now();
 const STARTING_ACCELERATION = 1;
 const STARTING_FRICTION = 0.9;
-const STARTING_FIRE_RATE = 20; //how many frames until you can fire another bullet
+const STARTING_FIRE_RATE = 19; //how many frames until you can fire another bullet
 let fireTimer = 0;
 let frame = 0;
 var canvas = document.getElementById('myCanvas');
@@ -48,7 +48,8 @@ let darkBullet = new Bullet(darkBulletSprite,
     10,
     1,
     10,
-    1
+    1,
+     new Audio('sounds/tinywarble.wav')
 );
 let lightBulletSprite = new Asset(
     'blueLaser.gif',
@@ -61,7 +62,8 @@ let lightBullet = new Bullet(lightBulletSprite,
     10,
     1,
     10,
-    1
+    1,
+    new Audio('sounds/laser2.wav')
 );
 let enemyContainer = new EnemyContainer(["alienShip.gif", "mainShip.png"], 100, 100);
 let background = new Asset(
@@ -72,7 +74,7 @@ let background = new Asset(
     1
 );
 
-window.requestAnimationFrame(drawGame);
+drawGame();
 
 
 function handleKeyboardInput() {
@@ -106,13 +108,13 @@ function drawGame() {
 
 function drawAndUpdate(){
     frame++;
-    handleKeyboardInput();
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawBackground();
     scoreDisplay.innerHTML = score;
-
     enemyContainer.draw();
     if (player.health > 0) {
+        handleKeyboardInput();
         player.updatePlayer();
         player.draw();
         enemyContainer.update();

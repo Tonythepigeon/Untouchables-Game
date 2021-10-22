@@ -5,6 +5,7 @@ function PlayerObject(
 	acceleration,
 	aerodynamicCoeff
 ) {
+
 	let sprite = new Asset(imageSrc, 0, 0, 1, 1);
 	this.sprite = sprite;
 	this.bullets = new Bullets();
@@ -37,7 +38,7 @@ function PlayerObject(
 		this.bullets.newBullet(
 			lightBullet,
 			this.xPos,
-			this.yPos,
+			this.yPos-50,
 			(this.xVel)/2,
 			-15+(this.yVel)/2,
 			1
