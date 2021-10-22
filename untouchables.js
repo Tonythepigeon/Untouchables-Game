@@ -195,5 +195,6 @@ function reset() {
     elementsOnCanvas = [];
     elementsOnCanvas.push(player);
     Bullets.bullets = [];
+    frame = 0;
     drawGame();
 };
