@@ -35,7 +35,7 @@ function PlayerObject(
 
 	this.fireBullet = function () {
 		this.bullets.newBullet(
-			darkBullet,
+			lightBullet,
 			this.xPos,
 			this.yPos,
 			(this.xVel)/2,
