@@ -1,7 +1,8 @@
 //stores enemies
 //imageSrcs: Array of string file names
 //image
-function EnemyContainer(imageSrcs, xStartPosition, yStartPosition) {
+function EnemyContainer(imageSrcs, xStartPosition, yStartPosition, sound) {
+	this.sound = sound;
 	this.xPos = xStartPosition
 	this.yPos = yStartPosition
 	this.wobble = new SinContainer(10,10,.1,.12);
@@ -31,6 +32,7 @@ function EnemyContainer(imageSrcs, xStartPosition, yStartPosition) {
 		for (let i = this.enemies.length - 1; i >= 0; i--) {
 			this.enemies[i].update();
 			if(this.enemies[i].health <= 0){
+				this.sound.play();
 				deadEnemies = deadEnemies.splice(i - (this.enemies.length - deadEnemies.length), 1);
 			}
 		}

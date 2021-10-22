@@ -65,7 +65,7 @@ let lightBullet = new Bullet(lightBulletSprite,
     1,
     new Audio('sounds/laser2.wav')
 );
-let enemyContainer = new EnemyContainer(["alienShip.gif", "mainShip.png"], 100, 100);
+let enemyContainer = new EnemyContainer(["alienShip.gif", "mainShip.png"], 100, 100, new Audio('sounds/bwah.wav'));
 let background = new Asset(
     '2k_stars.jpg',
     0,
