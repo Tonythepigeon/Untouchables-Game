@@ -79,22 +79,24 @@ drawGame();
 
 
 function handleKeyboardInput() {
-    if (keyMap["ArrowDown"] || keyMap['s'] || keyMap['S'])
-        player.moveDown();
-    if (keyMap["ArrowUp"] || keyMap['w'] || keyMap['W'])
-        player.moveUp();
-    if (keyMap["ArrowLeft"] || keyMap['a'] || keyMap['A'])
-        player.moveLeft();
-    if (keyMap["ArrowRight"] || keyMap['d'] || keyMap['D'])
-        player.moveRight();
-    if (keyMap[" "]) {
-        if (fireTimer == 0) {
-            player.fireBullet();
-            fireTimer++;
+    if(!isGameOver){
+        if (keyMap["ArrowDown"] || keyMap['s'] || keyMap['S'])
+            player.moveDown();
+        if (keyMap["ArrowUp"] || keyMap['w'] || keyMap['W'])
+            player.moveUp();
+        if (keyMap["ArrowLeft"] || keyMap['a'] || keyMap['A'])
+            player.moveLeft();
+        if (keyMap["ArrowRight"] || keyMap['d'] || keyMap['D'])
+            player.moveRight();
+        if (keyMap[" "]) {
+            if (fireTimer == 0) {
+                player.fireBullet();
+                fireTimer++;
+            }
         }
+        if (frame % (200) == 0)
+            enemyContainer.newEnemy(0, darkBullet, .5, 3);
     }
-    if (frame % (200) == 0)
-        enemyContainer.newEnemy(0, darkBullet, .5, 3);
 }
 
 function drawGame() {
@@ -119,7 +121,9 @@ function drawAndUpdate(){
         player.updatePlayer();
         player.draw();
         enemyContainer.update();
+        isGameOver = false;
     } else {
+        isGameOver = true;
         player.draw();
         gameOver();
     }

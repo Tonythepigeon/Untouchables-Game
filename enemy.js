@@ -3,9 +3,10 @@
 //image
 function EnemyContainer(imageSrcs, xStartPosition, yStartPosition, sound) {
 	this.sound = sound;
+	this.sound.volume = 0.1;
 	this.xPos = xStartPosition
 	this.yPos = yStartPosition
-	this.wobble = new SinContainer(10,10,.1,.12);
+	this.wobble = new SinContainer(10, 10, .1, .12);
 	this.enemySprites = []
 	for (let i = 0; i < imageSrcs.length; i++) {
 		let sprite = new Asset(imageSrcs[i], 0, 0, 1, 1);
@@ -13,7 +14,7 @@ function EnemyContainer(imageSrcs, xStartPosition, yStartPosition, sound) {
 	}
 
 	this.enemies = new Array();
-	this.newEnemy = function(enemyTypeIndex, bulletObject, size, speed) {
+	this.newEnemy = function (enemyTypeIndex, bulletObject, size, speed) {
 		let enemy = new Enemy(
 			this.enemySprites[enemyTypeIndex],
 			bulletObject,
@@ -26,15 +27,14 @@ function EnemyContainer(imageSrcs, xStartPosition, yStartPosition, sound) {
 		);
 		this.enemies.push(enemy);
 	}
-	this.update = function(){
+	this.update = function () {
 		let deadEnemies = this.enemies;
 		for (let i = this.enemies.length - 1; i >= 0; i--) {
 			this.enemies[i].update();
-			if(this.enemies[i].health <= 0){
+			if (this.enemies[i].health <= 0) {
 				this.sound.play();
 				this.enemies[i].kill();
 				deadEnemies = deadEnemies.splice(i - (this.enemies.length - deadEnemies.length), 1);
-
 			}
 		}
 	}
@@ -43,12 +43,13 @@ function EnemyContainer(imageSrcs, xStartPosition, yStartPosition, sound) {
 			this.enemies[i].draw();
 		}
 	}
+
 }
 
 function Enemy(enemySprite, bulletObject, xStartPosition, yStartPosition, size, speed, xySin, bulletFreq) {
 	this.t = 0;
 	this.sprite = enemySprite;
-	this.health = 2;
+	this.health = 3;
 	this.speed = speed;
 	this.sinObj = xySin;
 	this.size = size;
@@ -58,16 +59,17 @@ function Enemy(enemySprite, bulletObject, xStartPosition, yStartPosition, size, 
 	this.bulletObject = bulletObject;
 	this.bullets = new Bullets();
 	elementsOnCanvas.push(this);
-	this.kill = function(){
-		elementsOnCanvas.splice(elementsOnCanvas.indexOf(this),1);
+	this.kill = function () {
+		elementsOnCanvas.splice(elementsOnCanvas.indexOf(this), 1);
+
 	}
 	this.getX = function () {
 		return this.xPos + this.sinObj.getSinX(this.t);
 	}
-	this.getXDelta = function(){
-		return this.speed+this.sinObj.getSinXDelta(this.t);
+	this.getXDelta = function () {
+		return this.speed + this.sinObj.getSinXDelta(this.t);
 	}
-	this.getYDelta = function(){
+	this.getYDelta = function () {
 		return this.sinObj.getSinYDelta(this.t);
 	}
 	this.getY = function () {
@@ -84,17 +86,17 @@ function Enemy(enemySprite, bulletObject, xStartPosition, yStartPosition, size, 
 		//bounce off walls
 		if (this.xPos > ctx.canvas.width || this.xPos < 0) {
 			this.speed *= -1;
-			this.xPos += this.speed*2;
+			this.xPos += this.speed * 2;
 			this.yPos += Math.abs(this.speed) * 3; //TODO maybe replace with y speed or some kind of difficulty variable?
 		}
 
-		if(this.t%this.bulletFreq == 0){
+		if (this.t % this.bulletFreq == 0) {
 			this.bullets.newBullet(
 				this.bulletObject,
 				this.getX(),
 				this.getY(),
 				this.getXDelta(),
-				7+this.getYDelta(),
+				7 + this.getYDelta(),
 				1
 			);
 		}
@@ -112,7 +114,8 @@ function SinContainer(xAmp, yAmp, xFreq, yFreq) {
 		return Math.sin(time * yFreq) * yAmp;
 	}
 	this.getSinYDelta = function (time) {
-		return Math.cos(time * yFreq) * yAmp *yFreq;
+		return Math.cos(time * yFreq) * yAmp * yFreq;
 	}
-
 }
+
+

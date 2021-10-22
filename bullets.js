@@ -29,6 +29,7 @@ function Bullets(){
 }
 function Bullet(bulletSprite, bulletType, bulletSpeed, bulletDamage, bulletSize, bulletSound) {
 	this.sound = new Audio(bulletSound.src);
+	this.sound.volume = .1;
 	this.sprite = bulletSprite;
 	this.type = bulletType;
 	this.speed = bulletSpeed;
