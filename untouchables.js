@@ -112,8 +112,11 @@ function handleKeyboardInput() {
             fireTimer++;
         }
     }
-    if (frame % (200) == 0)
+    console.log()
+    if (frame % (200-Math.min(~~(frame/100),150)) == 0){
+        console.log(200-Math.min(~~(frame/100),150));
         enemyContainer.newEnemy(0, darkBullet, .5, 3);
+    }
 }
 
 function drawGame() {
