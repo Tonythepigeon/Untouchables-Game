@@ -16,20 +16,6 @@ let isGameOver;
 let score = 0;
 let scoreDisplay = document.getElementById('score');
 let healthDisplay = document.getElementById('health');
-
-var requestAnimFrame = (function () {
-    return (
-        window.requestAnimationFrame ||
-        window.webkit.RequestAnimationFrame ||
-        window.moz.RequestAnimationFrame ||
-        window.o.RequestAnimationFrame ||
-        window.ms.RequestAnimationFrame ||
-        function (callback) {
-            window.setTimeout(callback, 1000 / 60);
-        }
-    );
-})();
-
 //keyboard listeners
 document.onkeydown = function (e) {
     keyMap[e.key] = true;
@@ -38,11 +24,13 @@ document.onkeyup = function (e) {
     keyMap[e.key] = false;
 }
 document.getElementById("play-again").addEventListener("click", function () {
-    reset();
+  reset();
 });
 
 ctx.canvas.width = window.innerWidth - 20;
 ctx.canvas.height = window.innerHeight - 20;
+//load images and start game
+
 //init global variables
 let background = new Asset(
     '2k_stars.jpg',
@@ -70,7 +58,7 @@ let darkBullet = new Bullet(darkBulletSprite,
     1,
     10,
     1,
-    new Audio('sounds/tinywarble.wav')
+     new Audio('sounds/tinywarble.wav')
 );
 let lightBulletSprite = new Asset(
     'blueLaser.gif',
@@ -87,34 +75,49 @@ let lightBullet = new Bullet(lightBulletSprite,
     new Audio('sounds/laser2.wav')
 );
 let enemyContainer = new EnemyContainer(["alienShip.gif", "mainShip.png"], 100, 100, new Audio('sounds/bwah.wav'));
-
-
-drawGame();
-
+window.onload = function() {
+    sessionStorage.clear()
+}
+preloadImages([
+    'images/alienShip.gif',
+    'images/blueLaser.gif',
+    'images/icon.png',
+    'images/mainShip.png',
+    'images/orangeShip.png',
+    'images/redLaser.gif',
+    'images/2k_stars.jpg'
+], function(){
+    console.log('All images were loaded');
+    let firstTime = sessionStorage.getItem("first_time");
+    if(!firstTime) {
+        // first time loaded!
+        sessionStorage.setItem("first_time","1");
+        location.reload();
+    }
+    drawGame();
+});
 
 function handleKeyboardInput() {
-    if (!isGameOver) {
-        if (keyMap["ArrowDown"] || keyMap['s'] || keyMap['S'])
-            player.moveDown();
-        if (keyMap["ArrowUp"] || keyMap['w'] || keyMap['W'])
-            player.moveUp();
-        if (keyMap["ArrowLeft"] || keyMap['a'] || keyMap['A'])
-            player.moveLeft();
-        if (keyMap["ArrowRight"] || keyMap['d'] || keyMap['D'])
-            player.moveRight();
-        if (keyMap[" "]) {
-            if (fireTimer == 0) {
-                player.fireBullet();
-                fireTimer++;
-            }
+    if (keyMap["ArrowDown"] || keyMap['s'] || keyMap['S'])
+        player.moveDown();
+    if (keyMap["ArrowUp"] || keyMap['w'] || keyMap['W'])
+        player.moveUp();
+    if (keyMap["ArrowLeft"] || keyMap['a'] || keyMap['A'])
+        player.moveLeft();
+    if (keyMap["ArrowRight"] || keyMap['d'] || keyMap['D'])
+        player.moveRight();
+    if (keyMap[" "]) {
+        if (fireTimer == 0) {
+            player.fireBullet();
+            fireTimer++;
         }
-        if (frame % (200) == 0)
-            enemyContainer.newEnemy(0, darkBullet, .5, 3);
     }
+    if (frame % (200) == 0)
+        enemyContainer.newEnemy(0, darkBullet, .5, 3);
 }
 
 function drawGame() {
-    animationId = requestAnimFrame(drawGame);
+    animationId = window.requestAnimationFrame(drawGame);
     now = Date.now();
     elapsed = now - then;
     if (elapsed > fpsInterval) {
@@ -123,7 +126,7 @@ function drawGame() {
     }
 }
 
-function drawAndUpdate() {
+function drawAndUpdate(){
     frame++;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -135,9 +138,7 @@ function drawAndUpdate() {
         player.updatePlayer();
         player.draw();
         enemyContainer.update();
-        isGameOver = false;
     } else {
-        isGameOver = true;
         player.draw();
         gameOver();
     }
@@ -148,12 +149,12 @@ function drawAndUpdate() {
         fireTimer = 0;
     }
 }
-function drawBackground() {
+function drawBackground(){
     ctx.save();
-    ctx.translate(canvas.width, 0);
-    ctx.rotate(90 * Math.PI / 180);
-    background.drawRaw(frame % canvas.height, 0, canvas.height, canvas.width);
-    background.drawRaw(frame % canvas.height - canvas.height, 0, canvas.height, canvas.width);
+    ctx.translate(canvas.width,0);
+    ctx.rotate(90*Math.PI/180);
+    background.drawRaw(frame%canvas.height,0,canvas.height,canvas.width);
+    background.drawRaw(frame%canvas.height-canvas.height,0,canvas.height,canvas.width);
     ctx.restore();
 }
 
