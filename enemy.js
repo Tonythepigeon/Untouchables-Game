@@ -14,7 +14,6 @@ function EnemyContainer(imageSrcs, xStartPosition, yStartPosition, sound) {
 
 	this.enemies = new Array();
 	this.newEnemy = function(enemyTypeIndex, bulletObject, size, speed) {
-
 		let enemy = new Enemy(
 			this.enemySprites[enemyTypeIndex],
 			bulletObject,
@@ -33,7 +32,9 @@ function EnemyContainer(imageSrcs, xStartPosition, yStartPosition, sound) {
 			this.enemies[i].update();
 			if(this.enemies[i].health <= 0){
 				this.sound.play();
+				this.enemies[i].kill();
 				deadEnemies = deadEnemies.splice(i - (this.enemies.length - deadEnemies.length), 1);
+
 			}
 		}
 	}
@@ -57,6 +58,9 @@ function Enemy(enemySprite, bulletObject, xStartPosition, yStartPosition, size, 
 	this.bulletObject = bulletObject;
 	this.bullets = new Bullets();
 	elementsOnCanvas.push(this);
+	this.kill = function(){
+		elementsOnCanvas.splice(elementsOnCanvas.indexOf(this),1);
+	}
 	this.getX = function () {
 		return this.xPos + this.sinObj.getSinX(this.t);
 	}
