@@ -193,6 +193,7 @@ function reset() {
     score = 0;
     enemyContainer.enemies = [];
     elementsOnCanvas = [];
+    elementsOnCanvas.push(player);
     Bullets.bullets = [];
     drawGame();
 };
