@@ -34,11 +34,24 @@ let player = new PlayerObject(
     STARTING_FRICTION
 );
 let darkBulletSprite = new Asset(
-    'redLasor.gif',
+    'redLaser.gif',
     0,
     0,
     .1,
     .1
+);
+let lightBulletSprite = new Asset(
+    'blueLaser.gif',
+    0,
+    0,
+    .1,
+    .1
+);
+let lightBullet = new Bullet(lightBulletSprite,
+    10,
+    1,
+    10,
+    1
 );
 let darkBullet = new Bullet(darkBulletSprite,
     10,
@@ -146,7 +159,11 @@ function reset() {
     document.getElementById('game-over-overlay').style.display = 'none';
     player.health = 3;
     score = 0;
-    enemies = [];
-    bullets = [];
+    player.xVel = 0;
+    player.yVel = 0;
+    player.xPos = canvas.width / 2;
+    player.yPos = canvas.height - 100;
+    enemyContainer.enemies = [];
+    Bullets.bullets = [];
     drawGame();
 };

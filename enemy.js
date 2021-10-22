@@ -11,7 +11,7 @@ function EnemyContainer(imageSrcs, xStartPosition, yStartPosition) {
 		this.enemySprites.push(sprite)
 	}
 
-	this.enemies = new Array();
+	this.enemies = [];
 	this.newEnemy = function(enemyTypeIndex, bulletObject, size, speed) {
 		let enemy = new Enemy(
 			this.enemySprites[enemyTypeIndex],
