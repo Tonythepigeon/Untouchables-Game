@@ -6,7 +6,7 @@ function Bullets(){
 	this.newBullet = function(bulletObject, xPos, yPos, xDir, yDir){
 		//clone bullet object
 		let b = bulletObject;
-		let bullet = new Bullet(b.sprite, b.type, b.speed, b.damage, b.size, b.sound);
+		let bullet = new Bullet(b.sprite, b.type, b.speed, b.damage, b.size, b.sound, b.sound.volume);
 		//give it properties
 		bullet.initBullet(xPos, yPos, xDir, yDir);
 		//add it to the array
@@ -27,9 +27,9 @@ function Bullets(){
 		}
 	}
 }
-function Bullet(bulletSprite, bulletType, bulletSpeed, bulletDamage, bulletSize, bulletSound) {
+function Bullet(bulletSprite, bulletType, bulletSpeed, bulletDamage, bulletSize, bulletSound, bulletVolume) {
 	this.sound = new Audio(bulletSound.src);
-	this.sound.volume = .1;
+	this.sound.volume = bulletVolume;
 	this.sprite = bulletSprite;
 	this.type = bulletType;
 	this.speed = bulletSpeed;

@@ -11,13 +11,15 @@ var canvas = document.getElementById('myCanvas');
 let ctx = canvas.getContext('2d');
 let keyMap = new Object();
 let elementsOnCanvas = new Array();
-
-let isGameOver;
 let score = 0;
 let scoreDisplay = document.getElementById('score');
 let healthDisplay = document.getElementById('health');
+let musicLoaded = false;
 //keyboard listeners
 document.onkeydown = function (e) {
+    if(musicLoaded){
+        loopMusic();
+    }
     keyMap[e.key] = true;
 }
 document.onkeyup = function (e) {
@@ -58,7 +60,8 @@ let darkBullet = new Bullet(darkBulletSprite,
     1,
     10,
     1,
-     new Audio('sounds/tinywarble.wav')
+     new Audio('sounds/tinywarble.wav'),
+    0.2
 );
 let lightBulletSprite = new Asset(
     'blueLaser.gif',
@@ -72,12 +75,23 @@ let lightBullet = new Bullet(lightBulletSprite,
     1,
     10,
     1,
-    new Audio('sounds/laser2.wav')
+    new Audio('sounds/laser2.wav'),
+    0.1
 );
 let enemyContainer = new EnemyContainer(["alienShip.gif", "mainShip.png"], 100, 100, new Audio('sounds/bwah.wav'));
 window.onload = function() {
     sessionStorage.clear()
 }
+//load audio
+
+document.getElementById('backgroundMusic').addEventListener('canplaythrough', loopMusic, false);
+function loopMusic() {
+    musicLoaded = true;
+    document.getElementById('backgroundMusic').volume = .1;
+    document.getElementById('backgroundMusic').play().then(r => loopMusic());
+}
+
+//load images and start game
 preloadImages([
     'images/alienShip.gif',
     'images/blueLaser.gif',
