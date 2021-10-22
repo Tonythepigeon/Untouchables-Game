@@ -35,7 +35,7 @@ function PlayerObject(
 
 	this.fireBullet = function () {
 		this.bullets.newBullet(
-			darkBullet,
+			lightBullet,
 			this.xPos,
 			this.yPos,
 			(this.xVel)/2,
@@ -71,10 +71,15 @@ function PlayerObject(
 			ctx.globalAlpha = 0.12;
 			canvas.style.filter = "contrast(130%) saturate(70%)"
 			if(this.health < 2){
+<<<<<<< Updated upstream
 				ctx.globalAlpha = 0.24;
 				this.xPos += ((Math.random()-.5)*3)
 				this.yPos += ((Math.random()-.5)*3)
 				canvas.style.filter = "contrast(150%) blur("+ (Math.random()*3)+"px) saturate(70%)"
+=======
+				ctx.globalAlpha = 0.04;
+				canvas.style.filter = "contrast(120%) blur(3px) saturate(80%)"
+>>>>>>> Stashed changes
 			}
 			if(this.health < 1){
 				ctx.globalAlpha = 0.3;
