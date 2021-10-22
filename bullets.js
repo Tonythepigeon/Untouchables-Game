@@ -57,7 +57,7 @@ function Bullet(bulletSprite, bulletType, bulletSpeed, bulletDamage, bulletSize)
 function detectCollision(bullet){
     elementsOnCanvas.forEach(function(element) {
 		if(bullet.xPos <=  element.xPos + element.sprite.image.width * element.size / 2 && bullet.xPos >= element.xPos - element.sprite.image.width * element.size / 2
-			&& bullet.yPos >=  element.yPos - element.sprite.image.height  * element.size / 2 && bullet.yPos <= element.yPos + element.sprite.image.height * element.size / 2){
+			&& bullet.yPos >=  element.yPos - element.sprite.image.height * element.size / 2 && bullet.yPos <= element.yPos + element.sprite.image.height * element.size / 2){
 			if(bullet.yDir < 0 && element.sprite.name != "mainShip.png"){ //You hit them
 				score += 100;
 				element.health -= 1;

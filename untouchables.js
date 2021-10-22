@@ -127,26 +127,6 @@ function drawBackground(){
     ctx.restore();
 }
 
-
-//OLD MOVE OBJECT CODE
-
-function moveObject(object, direction, distance, func) {
-    if (func == "Stick on Screen") {
-        if (object.xPos > canvas.width - object.width) {
-            object.xPos = canvas.width - object.width;
-        } else if (object.xPos < 0) {
-            object.xPos = 0;
-        }
-        if (object.yPos > canvas.height - object.height) {
-            object.yPos = canvas.height - object.height;
-        } else if (object.yPos < 0) {
-            object.yPos = 0;
-        }
-    }
-    ctx.drawImage(object.image, object.xPos, object.yPos, object.width, object.height);
-}
-
-
 function gameOver() {
     document.getElementById("game-over").style.display = "block";
     document.getElementById("game-over-overlay").style.display = "block";

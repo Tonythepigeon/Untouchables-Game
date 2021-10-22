@@ -21,7 +21,7 @@ function EnemyContainer(imageSrcs, xStartPosition, yStartPosition) {
 			size,
 			speed,
 			this.wobble,
-			50
+			75
 		);
 		this.enemies.push(enemy);
 	}
