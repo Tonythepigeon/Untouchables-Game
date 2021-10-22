@@ -30,6 +30,13 @@ document.getElementById("play-again").addEventListener("click", function () {
 ctx.canvas.width = window.innerWidth - 20;
 ctx.canvas.height = window.innerHeight - 20;
 //init global variables
+let background = new Asset(
+    '2k_stars.jpg',
+    0,
+    0,
+    1,
+    1
+);
 let player = new PlayerObject(
     'mainShip.png',
     canvas.width / 2,
@@ -66,13 +73,7 @@ let lightBullet = new Bullet(lightBulletSprite,
     new Audio('sounds/laser2.wav')
 );
 let enemyContainer = new EnemyContainer(["alienShip.gif", "mainShip.png"], 100, 100, new Audio('sounds/bwah.wav'));
-let background = new Asset(
-    '2k_stars.jpg',
-    0,
-    0,
-    1,
-    1
-);
+
 
 drawGame();
 
