@@ -16,6 +16,20 @@ let isGameOver;
 let score = 0;
 let scoreDisplay = document.getElementById('score');
 let healthDisplay = document.getElementById('health');
+
+var requestAnimFrame = (function () {
+    return (
+        window.requestAnimationFrame ||
+        window.webkit.RequestAnimationFrame ||
+        window.moz.RequestAnimationFrame ||
+        window.o.RequestAnimationFrame ||
+        window.ms.RequestAnimationFrame ||
+        function (callback) {
+            window.setTimeout(callback, 1000 / 60);
+        }
+    );
+})();
+
 //keyboard listeners
 document.onkeydown = function (e) {
     keyMap[e.key] = true;
@@ -24,7 +38,7 @@ document.onkeyup = function (e) {
     keyMap[e.key] = false;
 }
 document.getElementById("play-again").addEventListener("click", function () {
-  reset();
+    reset();
 });
 
 ctx.canvas.width = window.innerWidth - 20;
@@ -56,7 +70,7 @@ let darkBullet = new Bullet(darkBulletSprite,
     1,
     10,
     1,
-     new Audio('sounds/tinywarble.wav')
+    new Audio('sounds/tinywarble.wav')
 );
 let lightBulletSprite = new Asset(
     'blueLaser.gif',
@@ -79,7 +93,7 @@ drawGame();
 
 
 function handleKeyboardInput() {
-    if(!isGameOver){
+    if (!isGameOver) {
         if (keyMap["ArrowDown"] || keyMap['s'] || keyMap['S'])
             player.moveDown();
         if (keyMap["ArrowUp"] || keyMap['w'] || keyMap['W'])
@@ -100,7 +114,7 @@ function handleKeyboardInput() {
 }
 
 function drawGame() {
-    animationId = window.requestAnimationFrame(drawGame);
+    animationId = requestAnimFrame(drawGame);
     now = Date.now();
     elapsed = now - then;
     if (elapsed > fpsInterval) {
@@ -109,7 +123,7 @@ function drawGame() {
     }
 }
 
-function drawAndUpdate(){
+function drawAndUpdate() {
     frame++;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -134,12 +148,12 @@ function drawAndUpdate(){
         fireTimer = 0;
     }
 }
-function drawBackground(){
+function drawBackground() {
     ctx.save();
-    ctx.translate(canvas.width,0);
-    ctx.rotate(90*Math.PI/180);
-    background.drawRaw(frame%canvas.height,0,canvas.height,canvas.width);
-    background.drawRaw(frame%canvas.height-canvas.height,0,canvas.height,canvas.width);
+    ctx.translate(canvas.width, 0);
+    ctx.rotate(90 * Math.PI / 180);
+    background.drawRaw(frame % canvas.height, 0, canvas.height, canvas.width);
+    background.drawRaw(frame % canvas.height - canvas.height, 0, canvas.height, canvas.width);
     ctx.restore();
 }
 
