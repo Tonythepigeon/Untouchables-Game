@@ -1,3 +1,7 @@
+fps = 70; //slightly more than 60 so the game runs super smooth on 60hz screens
+fpsInterval = 1000 / fps;
+//fps code stolen from https://codepen.io/doener48/pen/vYXRLzJ?editors=1010
+then = Date.now();
 const STARTING_ACCELERATION = 1;
 const STARTING_FRICTION = 0.9;
 const STARTING_FIRE_RATE = 20; //how many frames until you can fire another bullet
@@ -91,8 +95,17 @@ function handleKeyboardInput() {
 }
 
 function drawGame() {
-    frame++;
+    animationId = window.requestAnimationFrame(drawGame);
+    now = Date.now();
+    elapsed = now - then;
+    if (elapsed > fpsInterval) {
+        then = now - (elapsed % fpsInterval);
+        drawAndUpdate();
+    }
+}
 
+function drawAndUpdate(){
+    frame++;
     handleKeyboardInput();
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawBackground();
@@ -113,11 +126,7 @@ function drawGame() {
     if (fireTimer > STARTING_FIRE_RATE) {
         fireTimer = 0;
     }
-    //requests next frame (don't call anything after)
-    if(player.health > 0)
-        window.requestAnimationFrame(drawGame);
 }
-
 function drawBackground(){
     ctx.save();
     ctx.translate(canvas.width,0);
