@@ -192,6 +192,7 @@ function reset() {
     player.yPos = canvas.height - 100;
     score = 0;
     enemyContainer.enemies = [];
+    elementsOnCanvas = [];
     Bullets.bullets = [];
     drawGame();
 };
