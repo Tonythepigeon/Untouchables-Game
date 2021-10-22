@@ -44,7 +44,6 @@ function EnemyContainer(imageSrcs, xStartPosition, yStartPosition) {
 function Enemy(enemySprite, bulletObject, xStartPosition, yStartPosition, size, speed, xySin, bulletFreq) {
 	this.t = 0;
 	this.sprite = enemySprite;
-
 	this.health = 3;
 	this.speed = speed;
 	this.sinObj = xySin;
