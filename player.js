@@ -39,7 +39,7 @@ function PlayerObject(
 			this.xPos,
 			this.yPos,
 			(this.xVel)/2,
-			-10+(this.yVel)/2,
+			-15+(this.yVel)/2,
 			1
 		);
 	};

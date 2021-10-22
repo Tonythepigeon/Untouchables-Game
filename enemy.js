@@ -45,7 +45,7 @@ function Enemy(enemySprite, bulletObject, xStartPosition, yStartPosition, size, 
 	this.t = 0;
 	this.sprite = enemySprite;
 
-	this.health = 3;
+	this.health = 2;
 	this.speed = speed;
 	this.sinObj = xySin;
 	this.size = size;
